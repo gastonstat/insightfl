@@ -53,7 +53,8 @@ def get_recommendations(category):
     cur.close()
     conn.close()
     query_products = [res[0] for res in sql_output]
-    sample = random.sample(range(len(query_products)), 5)
+    sample_size = min(len(query_products) , 5)
+    sample = random.sample(range(len(query_products)), sample_size)
     recom_products = []
     for s in sample:
         recom_products.append(query_products[s])

@@ -66,28 +66,37 @@ def category():
     #if request.form.get('continue', None) == 'Fill Info':
     if category_data == '--select--':
         return render_template('score.html', form=form, ings=False, score=False, 
-        error_text=error_text, id_cat=id_cat, recom=recom)
+            error_text=error_text, id_cat=id_cat, recom=recom)
     else:
         ings = display_ingredients(category_data)
-    if request.form.get('continue', None) == 'Fill Info':
-        form.number_ingredients.data = '0'
-        return render_template('score.html', form=form, ings=ings, score=False, 
-        error_text=error_text, id_cat=id_cat, recom=recom)
-    if request.form.get('submit', None) == 'Get Score':
-        # check toxic selection
-        if form.has_toxics.data == 'select':
-            error_text = "Indicate ingredients"
+        if request.form.get('continue', None) == 'Fill Info':
+            form.number_ingredients.data = ''
             return render_template('score.html', form=form, ings=ings, score=False, 
-            error_text=error_text, id_cat=id_cat, recom=recom)
+                error_text=error_text, id_cat=id_cat, recom=recom)
         else:
-            number_ingredients = form.number_ingredients.data
-            has_toxic = form.has_toxics.data
-            score = compute_score(category_data, number_ingredients, has_toxic)
-            id_cat = get_id_category(category_data)
-            recom = get_recommendations(category_data)
-            return render_template('score.html', form=form, ings=ings, score=score, 
-            error_text=error_text, id_cat=id_cat, recom=recom)
-    return render_template('score.html', form=form, ings=ings, score=False, 
+            if request.form.get('submit', None) == 'Get Score':
+                # check toxic selection
+                if form.has_toxics.data == 'select':
+                    error_text = "Indicate ingredients"
+                    return render_template('score.html', form=form, ings=ings, score=False, 
+                        error_text=error_text, id_cat=id_cat, recom=recom)
+                else:
+                    number_ingredients = form.number_ingredients.data
+                    has_toxic = form.has_toxics.data
+                    score = compute_score(category_data, number_ingredients, has_toxic)
+                    id_cat = get_id_category(category_data)
+                    return render_template('score.html', form=form, ings=ings, score=score, 
+                        error_text=error_text, id_cat=id_cat, recom=recom)
+            else:
+                if request.form.get('submit', None) == 'Show Recom':
+                    number_ingredients = form.number_ingredients.data
+                    has_toxic = form.has_toxics.data
+                    score = compute_score(category_data, number_ingredients, has_toxic)
+                    id_cat = get_id_category(category_data)
+                    recom = get_recommendations(category_data)
+                    return render_template('score.html', form=form, ings=ings, score=score, 
+                        error_text=error_text, id_cat=id_cat, recom=recom)
+    return render_template('score.html', form=form, ings=False, score=False, 
     error_text=error_text, id_cat=id_cat, recom=recom)
 
 

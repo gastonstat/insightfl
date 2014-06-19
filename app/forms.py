@@ -45,7 +45,7 @@ category_menu = [('--select--', '--select--'),
 class CategoryForm(Form):
     category = SelectField('category', 
                     choices=category_menu)
-    number_ingredients = IntegerField('number_ingredients', default = 0, validators=[Required("Integer")])
+    number_ingredients = IntegerField('number_ingredients', validators=[Required("Integer")])
     has_toxics = SelectField('has_toxics', 
                     choices=[('no', 'no'),
                             ('yes', 'yes')])
