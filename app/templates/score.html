@@ -1,0 +1,101 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+<!--
+<div class="row" style="margin-top: 55px; height:100%">
+<div class="col-md-6" style="height:100%">
+-->
+
+
+<!-- Like field -->
+<div class="container">
+  	<!-- <div class="jumbotron"> -->
+  	<div class="row" style="margin-top: 10px; height:100%">
+   		<div class="col-md-9" style="height:100%">
+
+			<!-- <div class="page-header"> -->
+			<div class="well well-sm">
+				<h2>Care Scoring</h2>
+			</div>
+		</div>
+    </div>  <!-- 1st row -->
+    
+  	<div class="row" style="margin-top: 10px; height:100%">
+		<!-- HTML Form -->
+		<form action="" method="POST" name="category_form">
+				
+   			<div class="col-md-5" style="height:100%">
+				{{form.hidden_tag()}}
+		
+				<div class="well well-sm">          
+					<p class="lead">
+					Choose a category:<br/>
+					{{ form.category(placeholder="Select one:", id="category") }}
+					<button type="submit" class="btn btn-info btn-sm" name="continue" value="Fill Info">Continue</button>
+					</p>
+				</div>
+
+				{% if ings %}
+
+				<div class="well well-sm">          
+					<p class="lead">Does it contain any of the ingredients below? {{form.has_toxics}}</p>
+					<ul class="list-group">
+					{% for ing in ings %}
+						<li class="list-group-item">{{ ing }}</li>
+					{% endfor %}
+					</ul>
+				</div>
+			
+				<div class="well well-sm">
+					<p class="lead">
+						Number of ingredients <em><small>(Optional)</small></em>:
+						{{ form.number_ingredients(size=5) }}</br>
+					</p>
+				</div>
+				
+			</div> <!-- first column -->		
+   			
+   			<div class="col-md-4" style="height:100%">
+   				<!-- <div class="well well-sm"> -->
+					<p class="lead">
+					<button type="submit" class="btn btn-warning btn-lg" name="submit" value="Get Score">Get Score</button>
+					</p>
+
+        		{% if score %}
+					<!-- <div> -->          
+				<h1>{{score}}</h1>
+				<h4><small>(scale: 0 - 10)</small></h4>
+				{% endif %}
+				
+				{% if id_cat %}
+				<div class="well well-sm">
+					<p class="lead">Some Product Recommendations</p>
+					<ul class="list-group">
+					{% for rec in recom %}
+						<li class="list-group-item">{{ rec }}</li>
+					{% endfor %}
+					</ul>
+					<p><a href="{{id_cat}}" target="_blank">Or check Good Guide</a></p>
+				</div>				
+				{% endif %}
+			
+			</div> <!-- second column -->
+			{% endif %}							
+		</form>
+
+
+		{% if error_text %}
+		<p>{{error_text}}</p>
+		{% endif %}
+		
+
+		
+	<!-- </div> -->
+   </div> <!-- 2nd row -->
+  
+    <!-- </div> jumbotron -->
+</div>  <!-- container -->
+
+
+{% endblock %}

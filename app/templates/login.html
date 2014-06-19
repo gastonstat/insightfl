@@ -1,0 +1,27 @@
+% extends "layout/base.html" %}
+
+{% block content %}
+<div class="row" style="margin-top: 55px; height:100%">
+<div class="col-md-3" style="height:100%">
+
+<!-- Like field -->
+<div class="panel panel-primary panel-success"  style="height: 41%">
+    <div class="panel-heading">
+        <!-- <h2 class="panel-title">Product Scorer</h2> -->
+        <h2>Product Scorer</h2>
+    </div>
+    <div class="panel-body">
+    
+    	<!-- HTML Form -->
+        <form action="" method="post" name="login">
+        	{{add_form.hidden_tag()}}
+            <p>
+        		Select a type of product:<br>
+        		{{form.openid(size=50)}}<br>
+    		</p>
+    		<p>{{form.remember_me}} Contains fragrance?</p>
+    		<p><input type="submit" value="Get Score"></p>	
+		</form>
+		
+	</div>
+{% endblock %}
