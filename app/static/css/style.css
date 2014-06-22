@@ -12,9 +12,9 @@ body {
 ---------------------------------------------------- */
 
 body {
-  padding-top: 20px;
+  padding-top: 1px;
   padding-bottom: 20px;
-  overflow:auto;
+  overflow: auto;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
@@ -32,12 +32,43 @@ body {
   padding: 14px 24px;
   font-size: 21px;
 }
+h2 .index {
+  font-size: 46px;
+}
+.mywell {
+    background-color: #5bc0de;
+}
 .category {
   background-color: #eee;
   font-size: 18px;
   height: 30px;
 }
-
+h1 .score {
+  margin: 3em 0 0 0;
+  font-size: 10px;
+}
+.panel-score {
+  border-color: #f0ad4e;
+}
+.panel-score > .panel-heading {
+  color: #333;
+  background-color: #f0ad4e;
+  border-color: #f0ad4e;
+}
+.panel-score > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #f0ad4e;
+}
+.panel-score > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #f0ad4e;
+}
+.progress-bar-neutral {
+  background-color: #b5b5b5;
+}
+.centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 /* ---------------------------------------------------- */
 
 

@@ -24,26 +24,35 @@ def index():
     # Renders index.html.
     return render_template('index.html')
 
-@app.route('/home')
-def home():
-    # Renders home.html.
-    return render_template('home.html')
-
 @app.route('/slides')
 def slides():
     # Renders slides.html.
     return render_template('slides.html')
-
-@app.route('/author')
-def contact():
-    # Renders author.html.
-    return render_template('author.html')
 
 @app.route('/about')
 def about():
     # Renders about.html.
     return render_template('about.html')
 
+@app.route('/graph')
+def graph():
+    # Renders graph.html.
+    return render_template('graph.html')
+
+@app.route('/plot')
+def plot():
+    # Renders plot.html.
+    return render_template('plot.html')
+
+@app.route('/scatter')
+def scatter():
+    # Renders scatter.html.
+    return render_template('scatter.html')
+
+@app.route('/barchart')
+def barchart():
+    # Renders barchar.html.
+    return render_template('barchart.html')
 
 @app.errorhandler(404)
 def page_not_found(error):

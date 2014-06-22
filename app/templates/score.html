@@ -71,22 +71,42 @@
 						<h3 class="panel-title">Score</h3>
 					</div>
 					<div class="panel-body">
-						<button type="submit" class="btn btn-warning btn-lg" name="submit" value="Get Score">Get Score</button>
+					    <div class="col-md-4" style="height:100%">
+							<button type="submit" class="btn btn-warning btn-lg" name="submit" value="Get Score">Get Score</button>
+						<!-- </div> -->
+						
 						{% if score %}         
-							<h1>{{score}}</h1>
-							<h4><small>(scale: 0 - 10)</small></h4>
-						{% endif %}
+					<!--	<div class="col-md-5" style="height:100%">	-->
+							<h1 class="score">{{score}}</h1>
 
+							<h4><small>(scale: 0 - 10)</small></h4>			
+							<div class="progress">
+							  <div class="progress-bar progress-bar-danger" style="width: 25%">
+								<span class="sr-only">20% Complete (danger)</span>0 - 2
+							  </div>
+							  <div class="progress-bar progress-bar-warning" style="width: 25%">
+								<span class="sr-only">20% Complete (warning)</span>3 - 4
+							  </div>
+							  <div class="progress-bar progress-bar-neutral" style="width: 25%">
+								<span class="sr-only">20% Complete (neutral)</span>5 - 6
+							  </div>
+							  <div class="progress-bar progress-bar-success" style="width: 25%">
+								<span class="sr-only">20% Complete (success)</span>7 - 10
+							  </div>
+							</div>
+						</div>
+						{% endif %}
+	
 					</div>
 				</div>
 			  
 				{% if id_cat %}
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title">Show Recommendations?</h3>
+						<h3 class="panel-title">{{form.category.data}} recommendations?</h3>
 					</div>
 					<div class="panel-body">
-						<button type="submit" class="btn btn-success btn-md" name="submit" value="Show Recom">Show</button>
+						<button type="submit" class="btn btn-info btn-md" name="submit" value="Show Recom">Show</button>
 						{% if recom %}
 						    <p>
 							<ul class="list-group">
@@ -101,12 +121,12 @@
 				</div>				
 				{% endif %}
 			</div> <!-- second column -->
-			{% endif %}							
+			{% endif %}	 <!-- end if ingredients -->		
 		</form>
 
 
 		{% if error_text %}
-			<p>{{error_text}}</p>
+			<p>Select a category</p>
 		{% endif %}
   				
     </div>  <!-- 2nd row -->

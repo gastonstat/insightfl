@@ -1,51 +1,41 @@
 {% extends "layout/base.html" %}
 
 {% block content %}
-  <div id="wrap">
     <div class="container">
+
       <div class="container-fluid">
         <div class="row">
-          <div class="col-md-4">
-            <img src="https://avatars3.githubusercontent.com/u/929485?s=460"
-                 class="img-responsive" height="200px" width="200px"/>
-          </div>
-          <div class="col-md-6">
+          <div class="col-md-8">
             <h1 class="text-justify text-muted">About</h1>
-            <p>
+            <p class="lead">
             Every morning tens of millions of women and men apply from 12 to 20 personal care products 
-            to themselves, according to the Cosmetic, Toiletry and Fragrance Association. 
+            to themselves, according to the <em>Cosmetic, Toiletry and Fragrance Association</em>. 
             Most of us assume that somebody has been watching to ensure that potential toxins in those  
             ingredients are kept away from intimate contact with the body's largest organ, the skin.
             </p>            
  
-            <p>
+            <p class="lead">
             Back in 1938, when the mandate of the Food and Drug Administration (FDA) was expanded by  
             Congress to give it authority over drugs and food additives, industry lobbying succeeded in  
-            blocking the agency from requiring testing of cosmetics. This hasn't changed for the past 76 years.
+            blocking the agency from requiring testing of cosmetics. <b>This hasn't changed for the past 76 years</b>.
             </p>            
  
-            <p>
+            <p class="lead">
             Toxic substances are synthetic chemicals and metals that can harm your health. 
             The potential for exposure to toxic substances is present in nearly every aspect of everyday life 
             and these exposures can affect all aspects of reproductive health. 
             </p>
  
-            <p>
+            <p class="lead">
             As we learn more about the nature of these exposures and their harmful effects on human health, 
             there is a growing demand for simple and accessible information on how to protect against exposure.            
-            </p>
-            <p class="lead">
-              Read 
-              <a href="http://gastonsanchez.com/about">more</a>.
             </p>
           </div>
         </div>
       </div>
+              <img src="/static/avg_score_barchart.png" class="img-responsive"/> <br/>
+              <img src="/static/num_ings_score.png" class="img-responsive"/>
     </div>
-  </div>
 
 {% endblock %}
 
-{% block footer %}
-  {% include "include/footer.html" %}
-{% endblock %}
