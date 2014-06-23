@@ -91,6 +91,8 @@ def category():
                         error_text=error_text, id_cat=id_cat, recom=recom)
                 else:
                     number_ingredients = form.number_ingredients.data
+                    if number_ingredients is None:
+                        number_ingredients = 0
                     has_toxic = form.has_toxics.data
                     score = compute_score(category_data, number_ingredients, has_toxic)
                     id_cat = get_id_category(category_data)

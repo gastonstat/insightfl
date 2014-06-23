@@ -17,7 +17,7 @@ def compute_score(category, num_ings, has_toxic):
     conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', db='care_products')
     cur = conn.cursor()
     cur.execute("""
-    SELECT ROUND(AVG(health), 2)
+    SELECT ROUND(AVG(health))
     FROM products
     WHERE category='%s';""" % category)
     returned_score = cur.fetchall()
