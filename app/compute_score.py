@@ -30,7 +30,7 @@ def compute_score(category, num_ings, has_toxic):
     returned_score = cur.fetchall()
     cur.close()
     conn.close()
-    tmp_score = returned_score[0][0]
+    tmp_score = int(round(returned_score[0][0]))
     
     if has_toxic == 'yes':
         final_score = '0'

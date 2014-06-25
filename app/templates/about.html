@@ -3,39 +3,60 @@
 {% block content %}
     <div class="container">
 
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-8">
-            <h1 class="text-justify text-muted">About</h1>
-            <p class="lead">
-            Every morning tens of millions of women and men apply from 12 to 20 personal care products 
-            to themselves, according to the <em>Cosmetic, Toiletry and Fragrance Association</em>. 
-            Most of us assume that somebody has been watching to ensure that potential toxins in those  
-            ingredients are kept away from intimate contact with the body's largest organ, the skin.
-            </p>            
- 
-            <p class="lead">
-            Back in 1938, when the mandate of the Food and Drug Administration (FDA) was expanded by  
-            Congress to give it authority over drugs and food additives, industry lobbying succeeded in  
-            blocking the agency from requiring testing of cosmetics. <b>This hasn't changed for the past 76 years</b>.
-            </p>            
- 
-            <p class="lead">
-            Toxic substances are synthetic chemicals and metals that can harm your health. 
-            The potential for exposure to toxic substances is present in nearly every aspect of everyday life 
-            and these exposures can affect all aspects of reproductive health. 
-            </p>
- 
-            <p class="lead">
-            As we learn more about the nature of these exposures and their harmful effects on human health, 
-            there is a growing demand for simple and accessible information on how to protect against exposure.            
-            </p>
-          </div>
-        </div>
-      </div>
-              <img src="/static/avg_score_barchart.png" class="img-responsive"/> <br/>
-              <img src="/static/num_ings_score.png" class="img-responsive"/>
-    </div>
+  	<div class="row">  
+   		<!-- <div class="col-md-11" style="height:100%"> -->
+   		<div class="col-md-12" style="height:100%">
+			<!-- <div class="page-header"> -->
+			<div class="well mywell-sm">
+				<h2><span style="color:#5bc0de">About this project</span></h2>
+			</div>
+		</div>
+    </div>  <!-- 1st row -->
+
+
+	<div class="row">
+	  <div class="col-md-8">
+		<p class="lead">
+		Every morning millions of women and men apply from 12 to 20 personal care products 
+		to themselves, according to the <em>Cosmetic, Toiletry and Fragrance Association</em>. 
+		Most of us take for granted that the products we use don't contain ingredients
+		with toxic substances. Unfortunately, this is far from true.
+		</p>            
+
+		 <p class="lead">
+		Unlike pharmaceuticals, cosmetics and personal care products are not tested for safety
+		before they go into the market. 
+		Pharmaceuticals have to go through strict premarket approval before they can be sold and used.
+		Cosmetics on the other hand are only regulated post market, and <b>do not have to be tested 
+		and proven safe before they are sold.</b></p>
+
+		<p class="lead">
+		The onus is on the consumer to select personal care products that don't contain 
+		harmful chemical ingredients. So the problem is: 
+		<b>How do you know that the products you use are safe?</b>
+		</p>
+				 
+		<p class="lead">
+		<code class="html"><span style="color:#51acc7;background:#efefef">skincareprods.info</span></code>
+		helps you <a href="/score">score</a> your personal care products so you can make a more informed 
+		decision about using your products. </br>
+		<ul class="list-group">
+			<li class="list-group-item"><a>Insights</a></li>
+			<li class="list-group-item"><a>Graph of products</a></li>
+		</ul>
+		</p>
+		 
+		<p>
+		This project was developed by <a href="http://gastonsanchez.com/about" target="_blank">Gaston Sanchez</a> during his fellowship at 
+		<a href="http://insightdatascience.com/" target="_blank">Insight Data Science</a>.
+		</p>
+	  </div>
+	</div>
+	  
+	  <!-- <img src="/static/avg_score_barchart.png" class="img-responsive"/> <br/>  -->
+	  <!-- <img src="/static/num_ings_score.png" class="img-responsive"/>  -->
+
+</div>
 
 {% endblock %}
 

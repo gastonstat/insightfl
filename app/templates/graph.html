@@ -7,15 +7,16 @@
 .node {
   stroke: #fff;
   stroke-width: 1.5px;
+  opacity: 0.3;
 }
 
 .link {
-  stroke: #999;
-  stroke-opacity: .6;
+  stroke: #ddd;
+  stroke-opacity: 0.5;
 }
 
 .label {
-  font: 16px sans-serif;
+  font: 18px sans-serif;
 }
 
 </style>
@@ -24,26 +25,26 @@
 
 	<div class="container">
 		<div class="row">
-			<h2>Scatter Plot in D3</h2>
+			<h2><span style="color:#ccc">Products grouped based on toxic ingredients</span></h2>
 
 
 			<script>
 
 			var width = 960,
-				height = 500;
+				height = 650;
 
 			var color = d3.scale.category20();
 
 			var force = d3.layout.force()
-				.charge(-120)
-				.linkDistance(30)
+				.charge(-150)
+				.linkDistance(35)
 				.size([width, height]);
 
 			var svg = d3.select("body").append("svg")
 				.attr("width", width)
 				.attr("height", height);
 
-			d3.json("/static/categories.json", function(error, graph) {
+			d3.json("/static/cluster_graph.json", function(error, graph) {
 			  force
 				  .nodes(graph.nodes)
 				  .links(graph.links)
@@ -53,15 +54,20 @@
 				  .data(graph.links)
 				.enter().append("line")
 				  .attr("class", "link")
-				  .style("stroke-width", function(d) { return Math.sqrt(d.value); });
+				  .style("stroke-width", 2);
+/*				  .style("stroke-width", function(d) { return Math.sqrt(d.value); }); */
 
 			  var node = svg.selectAll(".node")
 				  .data(graph.nodes)
 				.enter().append("circle")
 				  .attr("class", "node")
 				  .attr("r", function(d) { return 3*d.score; })
-				  .style("fill", function(d) { return color(d.group); })
+				  .style("fill", function(d) { return d.color; })
 				  .call(force.drag);
+
+/*				  .attr("r", function(d) { return 3*d.score; }) */
+/*				  .style("fill", function(d) { return color(d.group); }) */
+
 
 			  node.append("title")
 				  .text(function(d) { return d.name; });
@@ -69,9 +75,14 @@
 			  var label = svg.selectAll(".label")
 			  	  .data(graph.nodes)
 			  	  .enter().append("text")
-			  	  .style("font-size", "14px")
-			  	  .attr("fill", "rgba(70, 70, 70, 0.7)")
-			      .text(function(d) { return d.name; });
+			  	  .style("font-size", "18px")
+			  	  .style("fill", function(d) { return d.color; })
+			      .text(function(d) { 
+			        if (d.name == '') {return ''}
+			        else {return d.name};
+			      });
+
+/*			  	  .style("fill", function(d) { return color(d.group); }) */
 
 
 			  force.on("tick", function() {
@@ -90,7 +101,7 @@
 			});
 
 			</script>
-
 		</div>
+
 	</div> <!-- container -->
 {% endblock %}

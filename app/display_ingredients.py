@@ -63,6 +63,6 @@ def get_recommendations(category):
         recom_scores.append(query_scores[s])
     results = {}
     for i in range(len(recom_products)):
-        results[recom_products[i]] = recom_scores[i]
+        results[recom_products[i]] = int(recom_scores[i])
     return results
 

@@ -37,10 +37,14 @@ h2 .index {
   font-size: 46px;
 }
 .mywell {
-    background-color: #5bc0de;
+  background-color: #5bc0de;
+}
+.mywell-sm {
+  padding: 0px 10px 1px 15px;
+  border-radius: 3px;
 }
 .category {
-  background-color: #eee;
+  background-color: #efefef;
   font-size: 18px;
   height: 30px;
 }

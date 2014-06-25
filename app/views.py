@@ -34,6 +34,11 @@ def about():
     # Renders about.html.
     return render_template('about.html')
 
+@app.route('/insights')
+def insights():
+    # Renders insights.html.
+    return render_template('insights.html')
+
 @app.route('/graph')
 def graph():
     # Renders graph.html.
@@ -138,27 +143,4 @@ def data_json():
 #	results = json.dumps(compute_score(category, 0, 'no'))
 #	return Response(results, mimetype='application/json')
 
-
-#@app.route('/score', methods = ['GET', 'POST'])
-#def score():
-#    # generate forms and get requests
-#    #add_form = TestForm(csrf_enabled = False)
-#    form = TestForm(csrf_enabled = False)
-#    #score = []
-#    category_data = form.category.data
-#    if category_data != 'select':
-#        number_ingredients = form.number_ingredients.data
-#        triclosan_flag = form.has_triclosan
-#        fragrance_flag = form.has_fragrance.data
-#        error_text = ""            
-#        category = form.category.data
-#        score = compute_score(category, number_ingredients)
-#        if fragrance_flag:
-#            score = str(0.0)
-#        return render_template('score.html', form=form, score=score, error_text=error_text)
-#    else:
-#        score = ""
-#        error_text = "Please select a category"
-#        return render_template('score.html', form=form, score=score, error_text=error_text)
-#    return render_template('score.html', form=form, score=score, error_text=error_text)
 
