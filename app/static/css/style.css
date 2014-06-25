@@ -20,8 +20,9 @@ body {
 
 /* Custom page header */
 .header {
+	padding-top: 10px;
+	padding-bottom: 50px;
 	border-bottom: 1px solid #e5e5e5;
-	padding-bottom: 15px;
 }
 /* Main marketing message and sign up button */
 .jumbotron {
@@ -68,6 +69,9 @@ h1 .score {
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+.centered-text {
+    text-align:center
 }
 /* ---------------------------------------------------- */
 

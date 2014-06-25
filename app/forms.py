@@ -3,7 +3,7 @@ from wtforms import TextField, BooleanField, SelectField, IntegerField
 from wtforms.validators import Required
 
 
-category_menu = [('--select--', '--select--'),
+category_menu = [
 ('after-shave', 'after-shave'),
 ('anti-aging', 'anti-aging'),
 ('baby-lotion', 'baby-lotion'),

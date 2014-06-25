@@ -21,9 +21,9 @@
   	<div class="row"> <!-- 2nd row -->
 		<form action="" method="POST" name="category_form">
 			<!-- first column -->	
-   			<div class="col-md-6" style="height:100%">
+   			<div class="col-md-5" style="height:100%">
 				{{form.hidden_tag()}}
-		
+
 				<div class="panel panel-default">
 					<div class="panel-heading">          
 						<h3 class="panel-title">Choose a category</h3>
@@ -44,12 +44,13 @@
 						<p>{{form.has_toxics}}</p>
 						<ul class="list-group">
 						{% for ing in ings %}
+							<!-- <li class="list-group-item">{{ ing }}</li> -->
 							<li class="list-group-item">{{ ing }}</li>
 						{% endfor %}
 						</ul>
 					</div>
 				</div>
-			
+
 				<div class="panel panel-default"> 
 					<div class="panel-heading">          
 						<h3 class="panel-title">Number of ingredients</h3>
@@ -57,14 +58,14 @@
 					<div class="panel-body">				
 						<p>
 							<em><small>(Optional)</small></em>:
-							{{ form.number_ingredients(size=5) }}</br>
+							{{ form.number_ingredients(size=5, autocomplete="off") }}</br>
 						</p>
 					</div>
 				</div>
 			</div> <!-- first column -->		
 
 
-   			<div class="col-md-6" style="height:100%">
+   			<div class="col-md-7" style="height:100%">
   			  
 	   			<div class="panel panel-default"> 
 					<div class="panel-heading">          
@@ -74,12 +75,11 @@
 					    <div class="col-md-4" style="height:100%">
 							<button type="submit" class="btn btn-warning btn-lg" name="submit" value="Get Score">Get Score</button>
 						<!-- </div> -->
-						
+
 						{% if score %}         
 					<!--	<div class="col-md-5" style="height:100%">	-->
 							<h1 class="score">{{score}}</h1>
 
-							<h4><small>(scale: 0 - 10)</small></h4>			
 							<div class="progress">
 							  <div class="progress-bar progress-bar-danger" style="width: 25%">
 								<span class="sr-only">20% Complete (danger)</span>0 - 2
@@ -96,22 +96,24 @@
 							</div>
 						</div>
 						{% endif %}
-	
+
 					</div>
 				</div>
-			  
+
 				{% if id_cat %}
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title">{{form.category.data}} recommendations?</h3>
+						<h3 class="panel-title">Recommendations for {{form.category.data}}</h3>
 					</div>
 					<div class="panel-body">
-						<button type="submit" class="btn btn-info btn-md" name="submit" value="Show Recom">Show</button>
+					<!--	<button type="submit" class="btn btn-info btn-md" name="submit" value="Show Recom">Show</button> -->
 						{% if recom %}
 						    <p>
 							<ul class="list-group">
-							{% for rec in recom %}
-								<li class="list-group-item">{{ rec }}</li>
+							{% for rec in recom.iteritems() %}
+								<li class="list-group-item">{{ rec[0] }}
+									<span class="badge">{{ rec[1] }}</span>
+								</li>
 							{% endfor %}
 							</ul>
 							</p>
@@ -135,4 +137,3 @@
 </div>  <!-- container -->
 
 {% endblock %}
-

@@ -1,0 +1,47 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+
+<div class="container">
+	<p class="lead">Select a Category</p>
+	
+	<form id='myform' method='POST' action='' role="form" class="form-inline form-small">
+		<select name='choice_category' id='choice_category' class="form-control">
+			<option value="baby-lotion">baby-lotion</option>
+			<option value="toothpaste">toothpaste</option>
+			<option value="nail-polish">nail-polish</option>
+		</select>
+	</form>
+	
+	<div id="result"> </div>
+
+	<div class="panel-body">
+		<ul class="list-group">
+			<li class="list-group-item"></li>
+		</ul>
+	</div>
+
+
+</div>  <!-- container -->
+
+{% endblock %}
+
+
+{% block scripts %}
+	<script>
+	$('#choice_category').change(function(ev) {
+		category = $(ev.target).val();
+		console.log(category);
+		
+		$.ajax({
+		url: '/data.json?category=' + category,
+		method: 'POST',
+		success: function(data) {
+			console.log(data);
+			$('#result').text('Result: ' + data);
+		}
+		});
+	});
+	</script>
+{% endblock %}

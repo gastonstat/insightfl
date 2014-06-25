@@ -2,16 +2,17 @@ import pymysql
 import sys
 
 
-cluster_avoid = ['after-shave','anti-aging','baby-sunscreen','baby-wipes','concealer-foundation','eye-makeup',
-'foot-care','fragrance-for-men','fragrance-for-women',
+cluster_avoid = ['after-shave','anti-aging','baby-sunscreen','baby-wipes',
+'concealer-foundation','eye-makeup','foot-care','fragrance-for-men','fragrance-for-women',
 'hand-sanitizer','moisturizer','sunless-tanning','sunscreen-below-spf-15',
 'sunscreen-spf-15-above','tanning-oil']
 
-cluster_average = ['after-shave','baby-wipes','bubble-bath','concealer-foundation','conditioner',
-'deodorants-antiperspirants-mens','deodorants-antiperspirants-womens','eye-makeup',
-'feminine-moisturizer','feminine-powder_deodorant','foot-care','fragrance-for-men',
-'fragrance-for-women','hair-spray','moisturizer','mouthwash','personal-cleansing',
-'scrubs-oils-powders','shaving-cream','sunless-tanning','sunscreen-below-spf-15','tanning-oil','toothpaste']
+cluster_average = ['after-shave','baby-wipes','bubble-bath','concealer-foundation',
+'conditioner','deodorants-antiperspirants-mens','deodorants-antiperspirants-womens',
+'eye-makeup','feminine-moisturizer','feminine-powder_deodorant','foot-care',
+'fragrance-for-men','fragrance-for-women','hair-spray','moisturizer','mouthwash',
+'personal-cleansing','scrubs-oils-powders','shaving-cream','sunless-tanning',
+'sunscreen-below-spf-15','tanning-oil','toothpaste']
 
 cluster_ok = ['after-shave','baby-wipes','conditioner','deodorants-antiperspirants-mens',
 'deodorants-antiperspirants-womens','feminine-moisturizer','foot-care','fragrance-for-men',
@@ -32,7 +33,7 @@ def compute_score(category, num_ings, has_toxic):
     tmp_score = returned_score[0][0]
     
     if has_toxic == 'yes':
-        final_score = '0.0'
+        final_score = '0'
     else:
         if num_ings >= 15:
             if category in cluster_avoid:

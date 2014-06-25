@@ -44,7 +44,7 @@ def get_recommendations(category):
     conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='', db='care_products')
     cur = conn.cursor()
     cur.execute("""
-    SELECT product
+    SELECT product, health
     FROM products
     WHERE category='%s' AND health>8
     ORDER BY health DESC
@@ -53,10 +53,16 @@ def get_recommendations(category):
     cur.close()
     conn.close()
     query_products = [res[0] for res in sql_output]
+    query_scores = [res[1] for res in sql_output]
     sample_size = min(len(query_products) , 5)
     sample = random.sample(range(len(query_products)), sample_size)
     recom_products = []
+    recom_scores = []
     for s in sample:
         recom_products.append(query_products[s])
-    return recom_products
+        recom_scores.append(query_scores[s])
+    results = {}
+    for i in range(len(recom_products)):
+        results[recom_products[i]] = recom_scores[i]
+    return results
 

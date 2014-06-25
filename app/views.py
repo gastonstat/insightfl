@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, Response
 from app import app, host, port, user, passwd, db
 from app.helpers.database import con_db
 from app.compute_score import compute_score
@@ -6,7 +6,7 @@ from app.display_ingredients import display_ingredients, get_id_category, get_re
 from forms import CategoryForm, LoginForm
 
 from flask import flash, redirect, request
-
+import urllib
 import pymysql
 import json
 
@@ -96,20 +96,47 @@ def category():
                     has_toxic = form.has_toxics.data
                     score = compute_score(category_data, number_ingredients, has_toxic)
                     id_cat = get_id_category(category_data)
-                    return render_template('score.html', form=form, ings=ings, score=score, 
-                        error_text=error_text, id_cat=id_cat, recom=recom)
-            else:
-                if request.form.get('submit', None) == 'Show Recom':
-                    number_ingredients = form.number_ingredients.data
-                    has_toxic = form.has_toxics.data
-                    score = compute_score(category_data, number_ingredients, has_toxic)
-                    id_cat = get_id_category(category_data)
-                    recom = get_recommendations(category_data)
+                    recommendations = get_recommendations(category_data)
+                    recom = recommendations
+                    print recom
                     return render_template('score.html', form=form, ings=ings, score=score, 
                         error_text=error_text, id_cat=id_cat, recom=recom)
     return render_template('score.html', form=form, ings=False, score=False, 
-    error_text=error_text, id_cat=id_cat, recom=recom)
+        error_text=error_text, id_cat=id_cat, recom=recom)
+#            else:
+#                if request.form.get('submit', None) == 'Show Recom':
+#                    number_ingredients = form.number_ingredients.data
+#                    has_toxic = form.has_toxics.data
+#                    score = compute_score(category_data, number_ingredients, has_toxic)
+#                    id_cat = get_id_category(category_data)
+#                    recom = get_recommendations(category_data)
+#                    return render_template('score.html', form=form, ings=ings, score=score, 
+#                        error_text=error_text, id_cat=id_cat, recom=recom)
+#    return render_template('score.html', form=form, ings=False, score=False, 
+#    error_text=error_text, id_cat=id_cat, recom=recom)
 
+
+
+@app.route('/search')
+def search():
+    # Renders search.html.
+    return render_template('search.html')
+
+
+from display_ingredients import display_ingredients
+@app.route('/data.json', methods = ['GET', 'POST'])
+def data_json():
+	category = urllib.unquote(request.args.get('category', 'shampoo'))
+	results = json.dumps(display_ingredients(category))
+	return Response(results, mimetype='application/json')
+
+
+#from compute_score import compute_score
+#@app.route('/data.json', methods = ['GET', 'POST'])
+#def data_json():
+#	category = urllib.unquote(request.args.get('category', 'toothpaste'))
+#	results = json.dumps(compute_score(category, 0, 'no'))
+#	return Response(results, mimetype='application/json')
 
 
 #@app.route('/score', methods = ['GET', 'POST'])
@@ -134,50 +161,4 @@ def category():
 #        error_text = "Please select a category"
 #        return render_template('score.html', form=form, score=score, error_text=error_text)
 #    return render_template('score.html', form=form, score=score, error_text=error_text)
-
-
-
-
-
-
-
-#    # check number of ingredients 
-#    if number_ingredients:
-#        if isinstance(number_ingredients, int):
-#            if (number_ingredients < 0):
-#                error_text = "Incorrent number of ingredients"
-#                return render_template('/score', form=form, error_text=error_text)
-
-
-
-
-#@app.route('/login', methods = ['GET', 'POST'])
-#def login():
-#    add_form = LoginForm(csrf_enabled = False)
-#    form = LoginForm(csrf_enabled = False)
-#    if form.validate_on_submit():
-#        flash('Login requested for OpenID="' + form.openid.data + '", remember_me=' + str(form.remember_me.data))
-#        return redirect('/index')
-#    return render_template('score.html', 
-#        title = 'Score it',
-#        form = form,
-#        add_form = add_form)
-
-
-#### new stuff to handle the MySQL database
-#@app.route("/db")
-#def baby_sunscreen():
-#    db.query("SELECT product FROM products WHERE category = 'baby-sunscreen' AND has_high = 1;")
-#    query_results = db.store_result().fetch_row(maxrows=0)
-#    cities = ""
-#    for result in query_results:
-#    	cities += unicode(result[0], 'utf8')
-#    	cities += "<br>"
-#    return cities
-
-
-#### Query to display product categories
-#SELECT category
-#FROM products
-#GROUP BY category;
 
