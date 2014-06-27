@@ -3,36 +3,31 @@
 {% block content %}
 
 <style type="text/css">
-body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  position: relative;
-  width: 960px;
+
+.bar text.value {
+  fill: #777;
 }
 
-.axis text {
-  font: 10px sans-serif;
-}
-
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
+.axis {
   shape-rendering: crispEdges;
 }
 
-.bar {
-  fill: steelblue;
-  fill-opacity: .9;
+.axis text {
+  font: 12px sans-serif;
+  color: #343434;
 }
 
-.x.axis path {
-  display: none;
+.axis path {
+  fill: none;
 }
 
-label {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+.x.axis line {
+  stroke: #fff;
+  stroke-opacity: .8;
+}
+
+.y.axis path {
+  stroke: black;
 }
 </style>
 
@@ -42,100 +37,82 @@ label {
 
 <div class="container">
   <div class="row">
-	<h2>Bar Chart in D3</h2>
-		
+    <div class="col-md-12" style="height:100%">
+	  <h2><span style="color:#5bc0de">Products ranked by health score</span></h2>
+	</div>
 		
 	<script type="text/javascript">
 
-		var margin = {top: 20, right: 20, bottom: 30, left: 40},
-			width = 960 - margin.left - margin.right,
-			height = 500 - margin.top - margin.bottom;
+		var m = [30, 100, 20, 100],
+			w = 1000 - m[1] - m[3],
+			h = 930 - m[0] - m[2];
 
-		var formatPercent = d3.format(".0%");
+		var format = d3.format(",.0f");
 
-		var x = d3.scale.ordinal()
-			.rangeRoundBands([0, width], .1, 1);
+		var x = d3.scale.linear().range([0, w]),
+			y = d3.scale.ordinal().rangeRoundBands([0, h], .1);
 
-		var y = d3.scale.linear()
-			.range([height, 0]);
-
-		var xAxis = d3.svg.axis()
-			.scale(x)
-			.orient("bottom");
-
-		var yAxis = d3.svg.axis()
-			.scale(y)
-			.orient("left")
-			.tickFormat(formatPercent);
+		var xAxis = d3.svg.axis().scale(x).orient("top").tickSize(-h),
+		/*	yAxis = d3.svg.axis().scale(y).orient("left").tickSize(0), */
+			bottomAxis = d3.svg.axis().scale(x).orient("bottom").tickSize(h);
 
 		var svg = d3.select("body").append("svg")
-			.attr("width", width + margin.left + margin.right)
-			.attr("height", height + margin.top + margin.bottom)
+			.attr("width", w + m[1] + m[3])
+			.attr("height", h + m[0] + m[2])
 		  .append("g")
-			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+			.attr("transform", "translate(" + m[3] + "," + m[0] + ")");
 
-		d3.tsv("data.tsv", function(error, data) {
+		d3.csv("/static/category_score.csv", function(data) {
 
-		  data.forEach(function(d) {
-			d.frequency = +d.frequency;
-		  });
+		  // Parse numbers, and sort by value.
+		  data.forEach(function(d) { d.score = +d.score; });
+		  data.sort(function(a, b) { return b.score - a.score; });
 
-		  x.domain(data.map(function(d) { return d.letter; }));
-		  y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
+		  // Set the scale domain.
+		  x.domain([0, d3.max(data, function(d) { return d.score; })]);
+		  y.domain(data.map(function(d) { return d.name; }));
+
+		  var bar = svg.selectAll("g.bar")
+			  .data(data)
+			.enter().append("g")
+			  .attr("class", "bar")
+			  .attr("transform", function(d) { return "translate(0," + y(d.name) + ")"; });
+
+		  bar.append("rect")
+			  .attr("width", function(d) { return 0*d.score; })
+		  .style("fill", function(d) { return d.color; } )
+			  .transition().delay(function(d, i) { return i * 40; }).duration(400)
+			  .attr("height", y.rangeBand())
+			  .attr("width", function(d) { return x(d.score); })
+			  ;
+
+		  bar.append("text")
+			  .attr("class", "value")
+			  .attr("x", 0)
+			  .transition().delay(function(d, i) { return i * 40; }).duration(400)
+			  .attr("x", function(d) { return x(d.score); })
+			  .attr("y", y.rangeBand() / 2)
+			  .attr("dx", +3)
+			  .attr("dy", ".30em")
+			  .attr("text-anchor", "begin")
+			  .text(function(d) { return d.name; });
 
 		  svg.append("g")
 			  .attr("class", "x axis")
-			  .attr("transform", "translate(0," + height + ")")
+			  .style("fill", "#888")
 			  .call(xAxis);
 
 		  svg.append("g")
+			  .attr("class", "x axis")
+			  .style("fill", "#888")
+			  .call(bottomAxis);
+
+
+		  /* svg.append("g")
 			  .attr("class", "y axis")
-			  .call(yAxis)
-			.append("text")
-			  .attr("transform", "rotate(-90)")
-			  .attr("y", 6)
-			  .attr("dy", ".71em")
-			  .style("text-anchor", "end")
-			  .text("Frequency");
-
-		  svg.selectAll(".bar")
-			  .data(data)
-			.enter().append("rect")
-			  .attr("class", "bar")
-			  .attr("x", function(d) { return x(d.letter); })
-			  .attr("width", x.rangeBand())
-			  .attr("y", function(d) { return y(d.frequency); })
-			  .attr("height", function(d) { return height - y(d.frequency); });
-
-		  d3.select("input").on("change", change);
-
-		  var sortTimeout = setTimeout(function() {
-			d3.select("input").property("checked", true).each(change);
-		  }, 2000);
-
-		  function change() {
-			clearTimeout(sortTimeout);
-
-			// Copy-on-write since tweens are evaluated after a delay.
-			var x0 = x.domain(data.sort(this.checked
-				? function(a, b) { return b.frequency - a.frequency; }
-				: function(a, b) { return d3.ascending(a.letter, b.letter); })
-				.map(function(d) { return d.letter; }))
-				.copy();
-
-			var transition = svg.transition().duration(750),
-				delay = function(d, i) { return i * 50; };
-
-			transition.selectAll(".bar")
-				.delay(delay)
-				.attr("x", function(d) { return x0(d.letter); });
-
-			transition.select(".x.axis")
-				.call(xAxis)
-			  .selectAll("g")
-				.delay(delay);
-		  }
+			  .call(yAxis);  */
 		});
+
 
 	</script>
 
