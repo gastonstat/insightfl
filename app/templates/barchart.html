@@ -40,10 +40,14 @@
     <div class="col-md-12" style="height:100%">
 	  <h2><span style="color:#5bc0de">Products ranked by health score</span></h2>
 	</div>
+
+		<div class="row-fluid">
+		  <div class="span6" id="area1"></div>
+		</div>		
 		
 	<script type="text/javascript">
 
-		var m = [30, 100, 20, 100],
+		var m = [30, 100, 20, 30],
 			w = 1000 - m[1] - m[3],
 			h = 930 - m[0] - m[2];
 
@@ -56,7 +60,9 @@
 		/*	yAxis = d3.svg.axis().scale(y).orient("left").tickSize(0), */
 			bottomAxis = d3.svg.axis().scale(x).orient("bottom").tickSize(h);
 
-		var svg = d3.select("body").append("svg")
+	// add the graph canvas to the body of the webpage within bootstrap
+//		var svg = d3.select("body").append("svg")
+		var svg = d3.select("#area1").append("svg")
 			.attr("width", w + m[1] + m[3])
 			.attr("height", h + m[0] + m[2])
 		  .append("g")

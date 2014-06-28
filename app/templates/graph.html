@@ -29,6 +29,10 @@
 			  <h2><span style="color:#5bc0de">Products grouped based on toxic ingredients</span></h2>
 			</div>
 
+			<div class="row-fluid">
+			  <div class="span6" id="area1"></div>
+			</div>		
+
 
 			<script>
 
@@ -42,7 +46,9 @@
 				.linkDistance(35)
 				.size([width, height]);
 
-			var svg = d3.select("body").append("svg")
+			// add the graph canvas to the body of the webpage within bootstrap
+//			var svg = d3.select("body").append("svg")
+			var svg = d3.select("#area1").append("svg")
 				.attr("width", width)
 				.attr("height", height);
 

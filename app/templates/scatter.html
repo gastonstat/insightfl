@@ -10,8 +10,13 @@ body {
 .axis path,
 .axis line {
   fill: none;
-  stroke: #000;
+  stroke: #999;
   shape-rendering: crispEdges;
+}
+
+.axis text {
+  font: 12px sans-serif;
+  color: #343434;
 }
 
 .dot {
@@ -37,14 +42,19 @@ text {
 
 <div class="container">
 	<div class="row">
-		<h2>Scatter Plot in D3</h2>
-		
+		<div class="col-md-12" style="height:100%">
+		  <h2><span style="color:#5bc0de">The more products, the lower the score</span></h2>
+		</div>	
+	
+		<div class="row-fluid">
+		  <div class="span6" id="area1"></div>
+		</div>		
 		
 	<script type="text/javascript">
-
-	var margin = {top: 20, right: 20, bottom: 30, left: 100},
+    
+	var margin = {top: 20, right: 20, bottom: 50, left: 80},
 		width = 960 - margin.left - margin.right,
-		height = 500 - margin.top - margin.bottom;
+		height = 600 - margin.top - margin.bottom;
 
 	/* 
 	 * value accessor - returns the value to encode for a given data object.
@@ -54,23 +64,28 @@ text {
 	 */ 
 
 	// setup x 
-	var xValue = function(d) { return d.dim1;}, // data -> value
-		xScale = d3.scale.linear().range([0, width]), // value -> display
-		xMap = function(d) { return xScale(xValue(d));}, // data -> display
-		xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+	var xValue = function(d) { return d.ingredients;}; // data -> value
+	var	xScale = d3.scale.linear()
+					.domain([4, 30])
+					.range([0, width]); // value -> display
+	var	xMap = function(d) { return xScale(xValue(d));}; // data -> display
+	var	xAxis = d3.svg.axis().scale(xScale).orient("bottom");
 
 	// setup y
-	var yValue = function(d) { return d.dim2;}, // data -> value
-		yScale = d3.scale.linear().range([height, 0]), // value -> display
-		yMap = function(d) { return yScale(yValue(d));}, // data -> display
-		yAxis = d3.svg.axis().scale(yScale).orient("left");
+	var yValue = function(d) { return d.score;}; // data -> value
+	var	yScale = d3.scale.linear()
+					.domain([0, 10])
+					.range([height, 0]); // value -> display
+	var	yMap = function(d) { return yScale(yValue(d));}; // data -> display
+	var	yAxis = d3.svg.axis().scale(yScale).orient("left");
 
 	// setup fill color
-	var cValue = function(d) { return d.group;},
+	var cValue = function(d) { return d.color;},
 		color = d3.scale.category10();
 
-	// add the graph canvas to the body of the webpage
-	var svg = d3.select("body").append("svg")
+	// add the graph canvas to the body of the webpage within bootstrap
+//	var svg = d3.select("body").append("svg")
+	var svg = d3.select("#area1").append("svg")
 		.attr("width", width + margin.left + margin.right)
 		.attr("height", height + margin.top + margin.bottom)
 	  .append("g")
@@ -82,18 +97,18 @@ text {
 		.style("opacity", 0);
 
 	// load data
-	d3.csv("{{ url_for('static', filename='categ_high_corresp.csv') }}", function(error, data) {
+	d3.csv("/static/category_ings_score.csv", function(error, data) {
 
 	  // change string (from CSV) into number format
 	  data.forEach(function(d) {
-		d.dim1 = +d.dim1;
-		d.dim2 = +d.dim2;
+		d.ingredients = +d.ingredients;
+		d.score = +d.score;
 	//    console.log(d);
 	  });
 
 	  // don't want dots overlapping axis, so add in buffer to data domain
-	  xScale.domain([d3.min(data, xValue)-0.25, d3.max(data, xValue)+0.25]);
-	  yScale.domain([d3.min(data, yValue)-0.25, d3.max(data, yValue)+0.25]);
+//	  xScale.domain([d3.min(data, xValue)-0.25, d3.max(data, xValue)+0.25]);  
+//	  yScale.domain([d3.min(data, yValue)-0.25, d3.max(data, yValue)+0.25]);  
 
 	  // x-axis
 	  svg.append("g")
@@ -103,9 +118,9 @@ text {
 		.append("text")
 		  .attr("class", "label")
 		  .attr("x", width)
-		  .attr("y", -6)
+		  .attr("y", 40)
 		  .style("text-anchor", "end")
-		  .text("dim1");
+		  .text("Number of Ingredients");
 
 	  // y-axis
 	  svg.append("g")
@@ -114,20 +129,20 @@ text {
 		.append("text")
 		  .attr("class", "label")
 		  .attr("transform", "rotate(-90)")
-		  .attr("y", 6)
+		  .attr("y", -40)
 		  .attr("dy", ".71em")
 		  .style("text-anchor", "end")
-		  .text("dim2");
+		  .text("Health Score");
 
 	  // draw dots
 	  svg.selectAll(".dot")
 		  .data(data)
 		.enter().append("circle")
 		  .attr("class", "dot")
-		  .attr("r", 5)
+		  .attr("r", function(d) { return d.ingredients * 0.8 })
 		  .attr("cx", xMap)
 		  .attr("cy", yMap)
-		  .style("fill", function(d) { return color(cValue(d));}) 
+		  .style("fill", function(d) { return d.color ;}) 
 		  .on("mouseover", function(d) {
 			  tooltip.transition()
 				   .duration(200)
@@ -144,7 +159,7 @@ text {
 		  });
 
 	  // add labels
-	  svg.selectAll(".label")
+	  svg.selectAll(".dotlabel")
 	  	  .data(data)
 	  	  .enter().append("text")
 	     .attr("x", xMap)
@@ -152,33 +167,12 @@ text {
 	     .attr("dy", ".3em")
 	     .style("font-size", "12px")
 	     .style("text-anchor", "start")
-	     .style("fill", function(d) { return color(cValue(d));}) 
+	     .style("fill", "#333") 
 	     .style("opacity", "0.5")
-	     .text( function(d) {return d.name ;} );
+	     .text( function(d) { return d.name ;} );
 //	     .style("fill", "rgba(31, 119, 180, 0.5)")
 		  
 
-	  // draw legend
-	  var legend = svg.selectAll(".legend")
-		  .data(color.domain())
-		.enter().append("g")
-		  .attr("class", "legend")
-		  .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
-	  // draw legend colored rectangles
-	  legend.append("rect")
-		  .attr("x", width - 18)
-		  .attr("width", 18)
-		  .attr("height", 18)
-		  .style("fill", color);
-
-	  // draw legend text
-	  legend.append("text")
-		  .attr("x", width - 24)
-		  .attr("y", 9)
-		  .attr("dy", ".35em")
-		  .style("text-anchor", "end")
-		  .text(function(d) { return d;})
 	});
 
 
