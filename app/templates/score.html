@@ -74,7 +74,7 @@
 						<h3 class="panel-title">Score</h3>
 					</div>
 					<div class="panel-body">
-					    <div class="col-md-4" style="height:100%">
+					    <div class="col-md-6" style="height:100%">
 							<button type="submit" class="btn btn-warning btn-lg" name="submit" value="Get Score">Get Score</button>
 						<!-- </div> -->
 
@@ -96,6 +96,22 @@
 								<span class="sr-only">20% Complete (success)</span>7 - 10
 							  </div>
 							</div>
+							
+							<div class="progress2">
+							  <div class="progress-bar2 progress-bar-label" style="width: 25%">
+								<span style="color:#d9534f">avoid</span>
+							  </div>
+							  <div class="progress-bar2 progress-bar-label" style="width: 25%">
+								<span style="color:#f0ad4e">caution</span>
+							  </div>
+							  <div class="progress-bar2 progress-bar-label" style="width: 25%">
+								<span style="color:#8a8a8a">acceptable</span>
+							  </div>
+							  <div class="progress-bar2 progress-bar-label" style="width: 25%">
+								<span style="color:#5cb85c">good</span>
+							  </div>
+							</div>
+							
 						</div>
 						{% endif %}
 
@@ -112,14 +128,15 @@
 						{% if recom %}
 						    <p>
 							<ul class="list-group">
-							{% for rec in recom.iteritems() %}
-								<li class="list-group-item">{{ rec[0] }}
-									<span class="badge">{{ rec[1] }}</span>
+							{% for rec in recom %}
+								<li class="list-group-item">
+									<a href="{{rec['id']}}" target="_blank">{{ rec['name'] }}</a>
+									<span class="badge">{{ rec['score'] }}</span>
 								</li>
 							{% endfor %}
 							</ul>
 							</p>
-						<p><a href="{{id_cat}}" target="_blank">Or check Good Guide</a></p>
+						<!-- <p>Or check <a href="{{id_cat}}" target="_blank">Good Guide</a></p>  -->
 						{% endif %}
 				  </div>
 				</div>				
