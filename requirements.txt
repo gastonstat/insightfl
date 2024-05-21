@@ -1,8 +1,8 @@
-flask>=2.3.2
-Jinja2==2.7.2
-MarkupSafe==0.19
-PyMySQL==0.6.2
-Boto3==1.26.72
-gunicorn==18.0
-itsdangerous==0.23
-wsgiref==0.1.2
+#flask>=2.3.2
+#Jinja2==2.7.2
+#MarkupSafe==0.19
+#PyMySQL==0.6.2
+#Boto3==1.26.72
+#gunicorn==18.0
+#itsdangerous==0.23
+#wsgiref==0.1.2
